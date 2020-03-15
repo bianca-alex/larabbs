@@ -11,6 +11,6 @@
 |
 */
 Route::get('/', 'PagesController@root')->name('root');
-
+Route::get('/cl',function(){echo phpinfo();});
 Auth::routes();
 
