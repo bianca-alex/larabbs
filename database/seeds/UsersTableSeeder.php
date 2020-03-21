@@ -43,7 +43,6 @@ class UsersTableSeeder extends Seeder
         // 单独处理第一个用户的数据
         $user = User::find(1);
         $user->name = 'Bianca';
-        $user->password = '$10$obzj2eEAJJlHYcSk5cLjbOFmeaZuKOGB.twoqrw63EO72coogsmQu';
         $user->email = 'bianca.lk.alex@outlook.com';
         $user->avatar = 'https://cdn.learnku.com/uploads/images/201710/14/1/ZqM7iaP4CR.png';
         $user->save();
