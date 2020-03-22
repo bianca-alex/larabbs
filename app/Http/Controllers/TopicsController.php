@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Topic;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
+use Auth;
 
 class TopicsController extends Controller
 {
@@ -27,21 +29,25 @@ class TopicsController extends Controller
         return view('topics.show', compact('topic'));
     }
 
-	public function create(Topic $topic)
+	public function create(Topic $topic, Category $category)
 	{
-		return view('topics.create_and_edit', compact('topic'));
+                $categories = $category->all();
+		return view('topics.create_and_edit', compact('topic','categories'));
 	}
 
-	public function store(TopicRequest $request)
+	public function store(TopicRequest $request, Topic $topic)
 	{
-		$topic = Topic::create($request->all());
-		return redirect()->route('topics.show', $topic->id)->with('message', 'Created successfully.');
+                $topic->fill($request->all());
+                $topic->user_id = Auth::id();
+                $topic->save();
+		return redirect()->route('topics.show', $topic->id)->with('message', '帖子创建成功');
 	}
 
-	public function edit(Topic $topic)
+	public function edit(Topic $topic, Category $category)
 	{
-        $this->authorize('update', $topic);
-		return view('topics.create_and_edit', compact('topic'));
+                $categories = $category->all();
+                $this->authorize('update', $topic);
+		return view('topics.create_and_edit', compact('topic','categories'));
 	}
 
 	public function update(TopicRequest $request, Topic $topic)
