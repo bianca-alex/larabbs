@@ -26,10 +26,10 @@ class CalculateActiveUser extends Command
      *
      * @return void
      */
-    public function __construct()
+    /*public function __construct()
     {
         parent::__construct();
-    }
+    }*/
 
     /**
      * Execute the console command.
@@ -39,10 +39,12 @@ class CalculateActiveUser extends Command
     public function handle(User $user)
     {
         // 在命令行打印一行信息
+        \Log::info('Begin calculate');
         $this->info("开始计算...");
 
         $user->calculateAndCacheActiveUsers();
 
         $this->info("成功生成！");
+        \Log::info('Finished');
     }
 }
